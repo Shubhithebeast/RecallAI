@@ -1,0 +1,21 @@
+{
+  "name": "@recallai/rag",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "hello": "tsx src/hello.ts",
+    "hello:lance": "tsx src/hello-lance.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "^0.30.0",
+    "apache-arrow": "^21.1.0"
+  }
+}
