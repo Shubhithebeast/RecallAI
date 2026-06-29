@@ -8,7 +8,6 @@ const PORT = Number(process.env.PORT ?? 3001);
 app.use(cors());
 app.use(express.json());
 
-// Health check — used by the web app to confirm the server is up.
 app.get('/api/health', (_req, res) => {
   res.json({
     status: 'ok',

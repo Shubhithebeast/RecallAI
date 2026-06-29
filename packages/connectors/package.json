@@ -12,7 +12,10 @@
   "dependencies": {
     "@recallai/db": "*",
     "@recallai/shared": "*",
-    "simple-git": "^3.27.0"
+    "mammoth": "^1.12.0",
+    "simple-git": "^3.27.0",
+    "unpdf": "^1.6.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

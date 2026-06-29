@@ -1,13 +1,5 @@
-/**
- * M2 persistence demo: store vectors in LanceDB, then search them.
- *
- * Run:  npm run hello:lance -w @recallai/rag
- *
- * Unlike hello.ts (in-memory), this SAVES vectors to disk (data/lancedb).
- * Run it twice: the second time, search works WITHOUT re-embedding the docs,
- * because the vectors are already persisted. That's the whole point of a
- * vector database.
- */
+// LanceDB persistence demo: store vectors on disk, then search.
+// Run: npm run hello:lance -w @recallai/rag
 import { embed, chat, EMBED_MODEL, CHAT_MODEL } from './ollama.js';
 import { upsertVectors, searchVectors, resetStore } from './vectorStore.js';
 
@@ -24,10 +16,8 @@ async function main() {
   console.log(`\n=== RecallAI · M2 LanceDB persistence demo ===`);
   console.log(`Embed: ${EMBED_MODEL}   Chat: ${CHAT_MODEL}\n`);
 
-  // Start clean each run so the demo is repeatable.
   await resetStore();
 
-  // 1) Embed + STORE every document in LanceDB (the indexing flow).
   console.log('1) Embedding + storing documents in LanceDB…');
   const records = await Promise.all(
     documents.map(async (d) => ({ ...d, vector: await embed(d.text) })),
@@ -35,7 +25,6 @@ async function main() {
   await upsertVectors(records);
   console.log(`   Stored ${records.length} vectors on disk (data/lancedb).\n`);
 
-  // 2) Embed the question and SEARCH LanceDB (the query flow).
   console.log(`2) Question: "${question}"`);
   const qVector = await embed(question);
   const hits = await searchVectors(qVector, 3);
@@ -46,7 +35,6 @@ async function main() {
   const best = hits[0];
   console.log(`\n   -> Best match: [${best.id}] "${best.text}"\n`);
 
-  // 3) Grounded answer using the retrieved text.
   console.log('3) Asking the chat model, grounded on that match…');
   const answer = await chat(
     `Context:\n${best.text}\n\nQuestion: ${question}\n\nAnswer using ONLY the context above.`,

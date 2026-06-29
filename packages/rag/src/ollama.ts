@@ -1,22 +1,9 @@
-/**
- * Ollama client — talks to the LOCAL Ollama server (default http://localhost:11434).
- *
- * Two things our RAG system needs from the AI:
- *   1. embed(text)  -> turns text into a vector (list of numbers) for similarity search
- *   2. chat(prompt) -> generates a natural-language answer
- *
- * No API keys, no internet — everything runs on your machine.
- */
-
+// Client for the local Ollama server (embeddings + chat).
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL ?? 'http://localhost:11434';
 
-/** Model that converts text -> vector. Small + fast + good quality. */
 export const EMBED_MODEL = 'nomic-embed-text';
-
-/** Model that writes answers. Small/fast to start; we can upgrade later. */
 export const CHAT_MODEL = 'llama3.2:3b';
 
-/** Turn a piece of text into an embedding vector. */
 export async function embed(text: string): Promise<number[]> {
   const res = await fetch(`${OLLAMA_BASE_URL}/api/embeddings`, {
     method: 'POST',
@@ -30,7 +17,6 @@ export async function embed(text: string): Promise<number[]> {
   return data.embedding;
 }
 
-/** Generate an answer from a prompt (optionally with a system instruction). */
 export async function chat(prompt: string, system?: string): Promise<string> {
   const res = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
     method: 'POST',
@@ -51,10 +37,7 @@ export async function chat(prompt: string, system?: string): Promise<string> {
   return data.message.content;
 }
 
-/**
- * Cosine similarity between two vectors → a number from -1 to 1.
- * Higher = more similar in meaning. This is the math behind "find related text".
- */
+// Cosine similarity (-1..1): higher = more similar in meaning.
 export function cosineSimilarity(a: number[], b: number[]): number {
   let dot = 0;
   let normA = 0;

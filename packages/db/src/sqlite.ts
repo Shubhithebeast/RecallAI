@@ -1,10 +1,4 @@
-/**
- * SQLite store — the "source of truth" for readable text + facts.
- *
- * Uses Node's BUILT-IN sqlite (node:sqlite) — no native dependency to compile.
- * This holds documents (commits, files, pages…). Vectors live separately in
- * LanceDB; the two are linked by a shared id.
- */
+// SQLite store (Node's built-in node:sqlite) for documents/facts. Vectors live in LanceDB.
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -14,7 +8,6 @@ const DB_FILE = process.env.SQLITE_PATH ?? './data/recallai.db';
 
 let db: DatabaseSync | null = null;
 
-/** Open the database (creating the file + schema on first use). */
 export function getDb(): DatabaseSync {
   if (db) return db;
   mkdirSync(dirname(DB_FILE), { recursive: true });
@@ -36,7 +29,6 @@ export function getDb(): DatabaseSync {
   return db;
 }
 
-/** One row as stored in SQLite. */
 export interface DocumentRow {
   id: string;
   source: string;
@@ -49,11 +41,7 @@ export interface DocumentRow {
   metadata: string | null;
 }
 
-/**
- * Insert or update many items in one transaction.
- * Idempotent: re-running with the same items updates instead of duplicating
- * (thanks to the UNIQUE(source, external_id) constraint).
- */
+// Idempotent bulk upsert in a single transaction.
 export function upsertDocuments(items: SourceItem[]): number {
   const database = getDb();
   const stmt = database.prepare(`
@@ -90,7 +78,6 @@ export function upsertDocuments(items: SourceItem[]): number {
   return count;
 }
 
-/** Count documents, optionally filtered by source. */
 export function countDocuments(source?: string): number {
   const database = getDb();
   if (source) {
@@ -103,7 +90,6 @@ export function countDocuments(source?: string): number {
   return row.n;
 }
 
-/** Fetch one document by its composite id (e.g. "git:<hash>"). */
 export function getDocumentById(id: string): DocumentRow | undefined {
   const database = getDb();
   return database.prepare('SELECT * FROM documents WHERE id = ?').get(id) as unknown as
@@ -111,7 +97,7 @@ export function getDocumentById(id: string): DocumentRow | undefined {
     | undefined;
 }
 
-/** Simple keyword search (LIKE) — a basic fallback before vector search. */
+// Keyword search (LIKE), not vector search.
 export function searchDocumentsByText(query: string, limit = 5): DocumentRow[] {
   const database = getDb();
   const like = `%${query}%`;

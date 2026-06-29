@@ -1,9 +1,5 @@
-/**
- * M3 demo: index a local git repo's commits into SQLite.
- *
- * Run:  npm run index:git -w @recallai/connectors -- "<path-to-repo>"
- * (defaults to the Contentconnect repo if no path is given)
- */
+// Index a local git repo's commits into SQLite.
+// Run: npm run index:git -w @recallai/connectors -- "<repoPath>"
 import { gitConnector, type GitConnectorConfig } from '../gitConnector.js';
 import { upsertDocuments, countDocuments } from '@recallai/db';
 

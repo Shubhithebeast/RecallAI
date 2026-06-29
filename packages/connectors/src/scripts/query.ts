@@ -1,9 +1,5 @@
-/**
- * Tiny helper to SEE what's in the database (keyword search via SQLite LIKE).
- * Note: this is plain text matching, NOT the smart vector search (that's M6).
- *
- * Run:  npm run query -w @recallai/connectors -- "session"
- */
+// Keyword search over stored documents (SQLite LIKE; not vector search).
+// Run: npm run query -w @recallai/connectors -- "session"
 import { searchDocumentsByText, countDocuments } from '@recallai/db';
 
 const term = process.argv[2] ?? 'session';

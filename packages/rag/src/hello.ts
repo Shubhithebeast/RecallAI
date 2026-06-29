@@ -1,18 +1,7 @@
-/**
- * M2 hello-world: SEE how RAG works, end to end, in the terminal.
- *
- * Run:  npm run hello -w @recallai/rag
- *
- * Steps:
- *   1. Embed a few "documents" (turn text -> vectors).
- *   2. Embed a question and find the most similar document (vector search).
- *   3. Feed that document to the chat model to get a grounded answer.
- *
- * This is the entire RAG idea, in miniature.
- */
+// RAG demo (in-memory): embed docs -> similarity search -> grounded answer.
+// Run: npm run hello -w @recallai/rag
 import { embed, chat, cosineSimilarity, EMBED_MODEL, CHAT_MODEL } from './ollama.js';
 
-// A tiny "knowledge base" — pretend these came from your Git/docs.
 const documents = [
   'The PM2 migration moved our Node services to PM2 for zero-downtime restarts and log management.',
   'The SSL certificate issue was fixed by adding the missing intermediate certificate to the chain.',
@@ -26,13 +15,11 @@ async function main() {
   console.log(`\n=== RecallAI · M2 RAG hello-world ===`);
   console.log(`Embed model: ${EMBED_MODEL}   Chat model: ${CHAT_MODEL}\n`);
 
-  // 1) Embed all documents.
   console.log('1) Embedding documents…');
   const docVectors = await Promise.all(documents.map((d) => embed(d)));
   console.log(`   Each document became a vector of ${docVectors[0].length} numbers.`);
   console.log(`   First doc, first 5 numbers: [${docVectors[0].slice(0, 5).map((n) => n.toFixed(3)).join(', ')}, …]\n`);
 
-  // 2) Embed the question and rank documents by similarity.
   console.log(`2) Question: "${question}"`);
   const qVector = await embed(question);
   const ranked = documents
@@ -46,7 +33,6 @@ async function main() {
   const best = ranked[0];
   console.log(`\n   -> Best match: "${best.doc}"\n`);
 
-  // 3) Grounded answer: give the model ONLY the best match as context.
   console.log('3) Asking the chat model, grounded on that context…');
   const answer = await chat(
     `Context:\n${best.doc}\n\nQuestion: ${question}\n\nAnswer using ONLY the context above.`,
