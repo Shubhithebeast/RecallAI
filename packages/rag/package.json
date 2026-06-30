@@ -9,6 +9,7 @@
     "hello:lance": "tsx src/hello-lance.ts",
     "embed": "tsx src/embedPipeline.ts",
     "search": "tsx src/searchTest.ts",
+    "ask": "tsx src/askTest.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
