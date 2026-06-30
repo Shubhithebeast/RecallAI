@@ -1,10 +1,13 @@
 // SQLite store (Node's built-in node:sqlite) for documents/facts. Vectors live in LanceDB.
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { SourceItem } from '@recallai/shared';
 
-const DB_FILE = process.env.SQLITE_PATH ?? './data/recallai.db';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..', '..', '..');
+const DB_FILE = process.env.SQLITE_PATH ?? resolve(ROOT, 'data', 'recallai.db');
 
 let db: DatabaseSync | null = null;
 

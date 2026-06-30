@@ -1,5 +1,10 @@
 // Wrapper around LanceDB (embedded vector DB). Swapping engines = change only this file.
 import * as lancedb from '@lancedb/lancedb';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..', '..', '..');
 
 export interface VectorRecord {
   id: string;
@@ -15,7 +20,7 @@ export interface SearchHit {
   score: number;
 }
 
-const DB_PATH = process.env.LANCEDB_PATH ?? './data/lancedb';
+const DB_PATH = process.env.LANCEDB_PATH ?? resolve(ROOT, 'data', 'lancedb');
 const TABLE = 'chunks';
 
 export async function upsertVectors(records: VectorRecord[]): Promise<void> {
