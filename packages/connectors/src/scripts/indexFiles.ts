@@ -5,6 +5,11 @@ import { upsertDocuments, countDocuments } from '@recallai/db';
 
 const folderPath = process.argv[2] ?? '.';
 
+if (folderPath === '--help' || folderPath === '-h') {
+  console.log('Usage: npm run index:files -w @recallai/connectors -- "<folderPath>"');
+  process.exit(0);
+}
+
 async function main() {
   console.log('\n=== RecallAI · M4 File indexer ===');
   console.log(`Folder: ${folderPath}\n`);

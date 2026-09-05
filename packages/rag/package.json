@@ -10,6 +10,7 @@
     "embed": "tsx src/embedPipeline.ts",
     "search": "tsx src/searchTest.ts",
     "ask": "tsx src/askTest.ts",
+    "mcp": "tsx src/mcp.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -19,7 +20,9 @@
   },
   "dependencies": {
     "@lancedb/lancedb": "^0.30.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@recallai/db": "*",
-    "apache-arrow": "^21.1.0"
+    "apache-arrow": "^21.1.0",
+    "zod": "^4.4.3"
   }
 }

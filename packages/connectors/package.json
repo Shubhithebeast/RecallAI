@@ -6,6 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "index:git": "tsx src/scripts/indexGit.ts",
+    "index:files": "tsx src/scripts/indexFiles.ts",
     "query": "tsx src/scripts/query.ts",
     "typecheck": "tsc --noEmit"
   },

@@ -11,8 +11,14 @@
     "dev": "concurrently -n server,web -c blue,green \"npm run dev -w @recallai/server\" \"npm run dev -w @recallai/web\"",
     "dev:server": "npm run dev -w @recallai/server",
     "dev:web": "npm run dev -w @recallai/web",
+    "agent": "npm run mcp -w @recallai/rag",
+    "index:git": "npm run index:git -w @recallai/connectors --",
+    "index:files": "npm run index:files -w @recallai/connectors --",
+    "embed": "npm run embed -w @recallai/rag",
+    "search": "npm run search -w @recallai/rag --",
+    "ask": "npm run ask -w @recallai/rag --",
     "build": "npm run build -w @recallai/server && npm run build -w @recallai/web",
-    "typecheck": "npm run typecheck -w @recallai/server && npm run typecheck -w @recallai/web"
+    "typecheck": "npm run typecheck -w @recallai/server && npm run typecheck -w @recallai/web && npm run typecheck -w @recallai/connectors && npm run typecheck -w @recallai/db && npm run typecheck -w @recallai/rag"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

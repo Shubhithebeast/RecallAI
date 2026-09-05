@@ -8,6 +8,11 @@ const DEFAULT_REPO =
 
 const repoPath = process.argv[2] ?? DEFAULT_REPO;
 
+if (repoPath === '--help' || repoPath === '-h') {
+  console.log('Usage: npm run index:git -w @recallai/connectors -- "<repoPath>"');
+  process.exit(0);
+}
+
 async function main() {
   const config: GitConnectorConfig = { repoPath };
 

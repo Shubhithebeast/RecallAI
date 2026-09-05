@@ -19,3 +19,8 @@ npm-debug.log*
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# The MCP registration is part of the shared RecallAI setup.
+.vscode/*
+!.vscode/
+!.vscode/mcp.json

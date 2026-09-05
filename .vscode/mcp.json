@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"recallai": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"tsx",
+				"${workspaceFolder}/packages/rag/src/mcp.ts"
+			]
+		}
+	},
+	"inputs": []
+}
